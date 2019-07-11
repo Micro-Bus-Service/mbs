@@ -23,6 +23,7 @@ export default class Server {
      */
     public start(): void {
         const app: Application = express();
+        app.use(express.json())
 
         new Router(app);
 

@@ -28,9 +28,23 @@ export default class Router {
       response.send("Hello user");
     });
 
-    this.app.post('/api/microservices/v1/services', (request: Request, response: Response) => {
+    // route for POST /services
+    // Register service to the Microservice Bus
+    this.app.post('/services', (request: Request, response: Response) => {
       const controller = new registerController(this.app);
       controller.register(request, response);
+    })
+
+    // route for DELETE /services/{serviceName}/version/{version}/nodes/{ip}/{port}
+    // Unregister service from the Microservice Bus
+    this.app.delete('/services/{serviceId}', (request: Request, response: Response) => {
+      
+    })
+
+    // route for GET /services/{serviceName}/version/{version}
+    // Query service from the Microservice Bus
+    this.app.get('/services/{serviceName}/version/{version}', (request: Request, response: Response) => {
+      
     })
   }
 }

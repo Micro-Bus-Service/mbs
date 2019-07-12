@@ -48,8 +48,8 @@ export default class registerController {
         const uuid = uuidv4();
         response.status(201);
         response.json({
-          serviceName: "bus",
-          version: "v1",
+          serviceName: global.serviceName,
+          version: global.version,
           uuid
         });
       }

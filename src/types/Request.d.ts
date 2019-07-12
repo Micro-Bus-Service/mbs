@@ -1,14 +1,8 @@
-declare interface nodes {
-  ip:string,
-  port:string,
-  ttl:number
-}
-
 declare interface RequestRegister {
   "serviceName":string,
   "version":string,
+  "ip": string,
+  "port":number,
   "url":string,
-  "protocol":string,
-  "path":string
-  "nodes": nodes[]
+  "messageType": string[]
 }

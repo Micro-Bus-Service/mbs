@@ -1,6 +1,7 @@
 /// <reference types="../types/Request" />
 
 import { Request, Response, Application } from 'express';
+const uuidv4 = require('uuid/v4');
 
 export default class registerController {
   private app: Application;
@@ -22,16 +23,19 @@ export default class registerController {
           errors.push('No version defined');
         }
   
+        if (data.ip === undefined) {
+          errors.push('No ip defined');
+        }
+  
+        if (data.port === undefined) {
+          errors.push('No port defined');
+        }
+  
         if (data.url === undefined) {
           errors.push('No url defined');
         }
-  
-        if (data.protocol === undefined) {
-          errors.push('No protocol defined');
-        }
-  
-        if (data.path === undefined) {
-          errors.push('No path defined');
+        if (data.messageType === undefined) {
+          errors.push('No message type defined');
         }
       } else {
         errors.push('Problem with request : no body')
@@ -41,9 +45,13 @@ export default class registerController {
         response.status(422);
         response.json(errors);
       } else {
-
+        const uuid = uuidv4();
         response.status(201);
-        response.json({success: true});
+        response.json({
+          serviceName: "bus",
+          version: "v1",
+          uuid
+        });
       }
   }
 }

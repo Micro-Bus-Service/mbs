@@ -4,7 +4,8 @@
   "description": "Bus pour microservice",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently -k -n \"Typescript,NodeJS\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\""
+    "dev": "concurrently -k -n \"Typescript,NodeJS\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "keywords": [
     "Bus",
@@ -13,9 +14,14 @@
   "author": "Cyril POIDEVIN <vilsafur@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.2",
+    "chai": "^4.2.0",
     "concurrently": "^4.1.1",
+    "mocha": "^6.2.0",
     "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {

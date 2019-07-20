@@ -1,7 +1,7 @@
 /// <reference types="../types/Request" />
 
 import { Request, Response, Application } from 'express';
-import Services from '../data/services';
+import Services from '../store/services';
 const uuidv4 = require('uuid/v4');
 
 export default class registerController {

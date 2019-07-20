@@ -12,13 +12,20 @@ export default class Router {
    */
   private app: Application; 
 
+  private controllers: {[name: string]: object} = {}
+
   /** 
    * Router's constructor. 
    */
   constructor(app:Application){
     this.app = app;
+    this.instanciateControllers();
 
     this.getRoutes();
+  }
+
+  private instanciateControllers() {
+    this.controllers['registerController'] = new registerController(this.app);
   }
 
   private getRoutes(): void {
@@ -31,7 +38,7 @@ export default class Router {
     // route for POST /services
     // Register service to the Microservice Bus
     this.app.post('/services', (request: Request, response: Response) => {
-      const controller = new registerController(this.app);
+      const controller = this.controllers['registerController'] as registerController;
       controller.register(request, response);
     })
 

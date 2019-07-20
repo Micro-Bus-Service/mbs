@@ -11,10 +11,6 @@ class Services {
    * add
    */
   public add(data: RequestRegister): boolean {
-    if (this.services[data.uuid] !== undefined) {
-      return false;
-    }
-
     for (const id in this.services) {
       if (this.services.hasOwnProperty(id)) {
         const service = this.services[id];

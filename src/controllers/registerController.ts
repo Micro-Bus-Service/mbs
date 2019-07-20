@@ -1,6 +1,7 @@
 /// <reference types="../types/Request" />
 
 import { Request, Response, Application } from 'express';
+import Services from '../data/services';
 const uuidv4 = require('uuid/v4');
 
 export default class registerController {
@@ -45,13 +46,20 @@ export default class registerController {
         response.status(422);
         response.json(errors);
       } else {
-        const uuid = uuidv4();
-        response.status(201);
-        response.json({
-          serviceName: global.serviceName,
-          version: global.version,
-          uuid
-        });
+        data.uuid = uuidv4();
+        const isAdded = Services.add(data);
+        if (isAdded) {
+          response.status(201);
+          response.json({
+            serviceName: global.serviceName,
+            version: global.version,
+            uuid: data.uuid
+          });
+        } else {
+          errors.push('Problem when adding the service, maybe he is already added')
+          response.status(422);
+          response.json(errors);
+        }
       }
   }
 }

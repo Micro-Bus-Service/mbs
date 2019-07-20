@@ -4,5 +4,6 @@ declare interface RequestRegister {
   "ip": string,
   "port":number,
   "url":string,
-  "messageType": string[]
+  "messageType": string[],
+  "uuid": string,
 }

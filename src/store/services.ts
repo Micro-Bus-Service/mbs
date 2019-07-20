@@ -3,12 +3,15 @@
 
 class Services {
   /**
-   * Liste of service registered
+   * List of service registered
    */
   private services: {[id: string]: Service} = {};
 
   /**
-   * add
+   * add a new Service
+   * @param {RequestRegister} data
+   * 
+   * @return {boolean} true if ok, false if already exist
    */
   public add(data: RequestRegister): boolean {
     for (const id in this.services) {

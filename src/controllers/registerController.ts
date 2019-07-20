@@ -5,12 +5,21 @@ import Services from '../store/services';
 const uuidv4 = require('uuid/v4');
 
 export default class registerController {
+  /**
+   * The instance of Express App
+   */
   private app: Application;
 
   constructor (app: Application) {
     this.app = app;
   }
 
+  /**
+   * Register Service Controller
+   * 
+   * @param {Request} request The request
+   * @param {Response} response The Response
+   */
   public register (request: Request, response: Response) {
     const data = request.body as RequestRegister;
     let errors: string[] = [];

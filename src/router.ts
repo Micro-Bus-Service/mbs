@@ -1,6 +1,6 @@
 /// <reference types="./types/Request" />
 import { Request, Response, Application } from 'express';
-import registerController from './controllers/registerController';
+import serviceController from './controllers/serviceController';
 
 /**
  * Define all routes for this application
@@ -20,19 +20,18 @@ export default class Router {
   constructor(app:Application){
     this.app = app;
     this.instanciateControllers();
-
     this.getRoutes();
   }
 
   private instanciateControllers() {
-    this.controllers['registerController'] = new registerController(this.app);
+    this.controllers['serviceController'] = new serviceController(this.app);
   }
 
   private getRoutes(): void {
     // route for POST /services
     // Register service to the Microservice Bus
     this.app.post('/services', (request: Request, response: Response) => {
-      const controller = this.controllers['registerController'] as registerController;
+      const controller = this.controllers['serviceController'] as serviceController;
       controller.register(request, response);
     })
 

@@ -35,6 +35,12 @@ export class Services {
     return true;
   }
 
+  /**
+   * Return the list of service listening a message type
+   * 
+   * @param {string} messageType The message type
+   * @return ServiceInterface
+   */
   public getByMessageType (messageType: string): ServiceInterface {
     let returned: ServiceInterface = {};
 

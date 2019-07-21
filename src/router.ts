@@ -29,12 +29,6 @@ export default class Router {
   }
 
   private getRoutes(): void {
-    // route for GET /
-    // returns a string to the client
-    this.app.get('/', (request: Request, response: Response) => {
-      response.send("Hello user");
-    });
-
     // route for POST /services
     // Register service to the Microservice Bus
     this.app.post('/services', (request: Request, response: Response) => {
@@ -48,9 +42,9 @@ export default class Router {
       
     })
 
-    // route for GET /services/{serviceName}/version/{version}
-    // Query service from the Microservice Bus
-    this.app.get('/services/{serviceName}/version/{version}', (request: Request, response: Response) => {
+    // route for POST /messages/{messageType}
+    // Send a message to the Bus
+    this.app.get('/messages/{messageType}', (request: Request, response: Response) => {
       
     })
   }

@@ -1,11 +1,11 @@
 /// <reference types="../types/Request" />
 /// <reference types="../types/Service" />
 
-class Services {
+export class Services {
   /**
    * List of service registered
    */
-  private services: {[id: string]: Service} = {};
+  private services: ServiceInterface = {};
 
   /**
    * add a new Service
@@ -33,6 +33,21 @@ class Services {
     }
 
     return true;
+  }
+
+  public getByMessageType (messageType: string): ServiceInterface {
+    let returned: ServiceInterface = {};
+
+    for (const uuid in this.services) {
+      if (this.services.hasOwnProperty(uuid)) {
+        const service = this.services[uuid];
+        if (service.messageAccepted.indexOf(messageType) >= 0) {
+          returned[uuid] = service;
+        }
+      }
+    }
+
+    return returned;
   }
 }
 

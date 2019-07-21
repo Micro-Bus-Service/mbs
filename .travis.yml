@@ -1,9 +1,12 @@
 language: node_js
 node_js :
- - stable
-cache: false
+  - stable
+cache:
+  directories:
+    - node_modules
+git:
+  depth: 1
 before_install:
- - npm install -g typescript
- - tsc
+  - npm install -g typescript@3.5.3
 install:
- - npm install
+  - npm install

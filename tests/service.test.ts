@@ -38,4 +38,10 @@ describe('Service data', () => {
 
     expect(Object.keys(servicesList).length).to.be.equal(1);
   });
+  it('should return an empty list of Service for message type given', () => {
+    sv.add(data);
+    const servicesList = sv.getByMessageType('message.test3');
+
+    expect(Object.keys(servicesList).length).to.be.equal(0);
+  });
 });

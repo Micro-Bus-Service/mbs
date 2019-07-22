@@ -5,7 +5,23 @@ export class Services {
   /**
    * List of service registered
    */
-  private services: ServiceInterface = {};
+  private services: ServicesInterface = {};
+
+  public getServices(): ServicesInterface {
+    return this.services;
+  }
+
+  public getServiceUUIDByIpAndPort(ip: string, port: number): string|false {
+    for (const uuid in this.services) {
+      if (this.services.hasOwnProperty(uuid)) {
+        const service = this.services[uuid];
+        if (service.ip === ip && service.port === port) {
+          return uuid;
+        }
+      }
+    }
+    return false;
+  }
 
   /**
    * add a new Service

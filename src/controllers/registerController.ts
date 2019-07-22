@@ -1,7 +1,7 @@
 /// <reference types="../types/Request" />
 
 import { Request, Response, Application } from 'express';
-import Services from '../store/services';
+import Services from '../store/Services';
 const uuidv4 = require('uuid/v4');
 
 export default class registerController {
@@ -65,7 +65,8 @@ export default class registerController {
             uuid: data.uuid
           });
         } else {
-          errors.push('Problem when adding the service, maybe he is already added')
+          const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
+          errors.push('This instance already registered by this UUID : ' + uuid)
           response.status(422);
           response.json(errors);
         }

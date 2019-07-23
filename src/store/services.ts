@@ -7,10 +7,12 @@ export class Services {
    */
   private services: ServicesInterface = {};
 
-  public getServices(): ServicesInterface {
-    return this.services;
-  }
-
+  /**
+   * Get uuid of the service used thisip and port
+   *
+   * @param {string} ip The ip
+   * @param {number} port The port
+   */
   public getServiceUUIDByIpAndPort(ip: string, port: number): string|false {
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {
@@ -20,6 +22,32 @@ export class Services {
         }
       }
     }
+    return false;
+  }
+
+  /**
+   * Check if uuid is registered
+   *
+   * @param {string} uuid The uuid to search
+   */
+  public haveUUID(uuid: string): boolean {
+    return this.services[uuid] !== undefined;
+  }
+
+  /**
+   * Check if a service listen this message's type
+   * @param {string} messageType The message's type
+   */
+  public isListened(messageType: string): boolean {
+    for (const id in this.services) {
+      if (this.services.hasOwnProperty(id)) {
+        const service = this.services[id];
+        if (service.messageAccepted.indexOf(messageType) >= 0) {
+          return true;
+        }
+      }
+    }
+
     return false;
   }
 
@@ -57,8 +85,8 @@ export class Services {
    * @param {string} messageType The message type
    * @return ServiceInterface
    */
-  public getByMessageType (messageType: string): ServiceInterface {
-    let returned: ServiceInterface = {};
+  public getByMessageType (messageType: string): ServicesInterface {
+    let returned: ServicesInterface = {};
 
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {

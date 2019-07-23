@@ -7,3 +7,8 @@ declare interface RequestRegister {
   "messageType": string[],
   "uuid": string,
 }
+
+declare interface RequestMessage {
+  "uuid": string,
+  "message": string|object,
+}

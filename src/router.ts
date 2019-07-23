@@ -1,6 +1,7 @@
 /// <reference types="./types/Request" />
 import { Request, Response, Application } from 'express';
 import registerController from './controllers/registerController';
+import messagesController from './controllers/messagesController';
 
 /**
  * Define all routes for this application
@@ -26,6 +27,7 @@ export default class Router {
 
   private instanciateControllers() {
     this.controllers['registerController'] = new registerController(this.app);
+    this.controllers['messagesController'] = new messagesController(this.app);
   }
 
   private getRoutes(): void {
@@ -42,10 +44,11 @@ export default class Router {
       
     })
 
-    // route for POST /messages/{messageType}
+    // route for POST /messages/:messageType
     // Send a message to the Bus
-    this.app.get('/messages/{messageType}', (request: Request, response: Response) => {
-      
+    this.app.post('/messages/:messageType', (request: Request, response: Response) => {
+      const controller = this.controllers['messagesController'] as messagesController;
+      controller.getMessage(request, response);
     })
   }
 }

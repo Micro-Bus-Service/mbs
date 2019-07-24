@@ -7,3 +7,7 @@ declare interface RequestRegister {
   "messageType": string[],
   "uuid": string,
 }
+
+declare interface RequestDelete {
+  "uuid": string,
+}

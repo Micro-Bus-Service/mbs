@@ -38,7 +38,8 @@ export default class Router {
     // route for DELETE /services/{serviceName}/version/{version}/nodes/{ip}/{port}
     // Unregister service from the Microservice Bus
     this.app.delete('/services/{serviceId}', (request: Request, response: Response) => {
-      
+      const controller = this.controllers['serviceController'] as serviceController;
+      controller.register(request, response);
     })
 
     // route for POST /messages/{messageType}

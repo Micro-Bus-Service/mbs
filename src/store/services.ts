@@ -41,7 +41,7 @@ export class Services {
    * @param {string} messageType The message type
    * @return ServiceInterface
    */
-  public getByMessageType (messageType: string): ServiceInterface {
+  public getByMessageType(messageType: string): ServiceInterface {
     let returned: ServiceInterface = {};
 
     for (const uuid in this.services) {
@@ -54,6 +54,15 @@ export class Services {
     }
 
     return returned;
+  }
+
+  public delete(uuid: string): boolean {
+    if (this.services[uuid] !== undefined) {
+      delete this.services[uuid];
+      return true;
+    }
+
+    return false;
   }
 }
 

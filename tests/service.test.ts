@@ -17,7 +17,7 @@ const data: RequestRegister = {
 
 let sv: Services; 
 
-describe('Service data', () => {
+describe('Service store', () => {
   beforeEach(() => {
     sv = new Services;
   });
@@ -43,5 +43,25 @@ describe('Service data', () => {
     const servicesList = sv.getByMessageType('message.test3');
 
     expect(Object.keys(servicesList).length).to.be.equal(0);
+  });
+  it('should remove a service', () => {
+    sv.add(data)
+    let servicesList = sv.getByMessageType('message.test');
+    
+    expect(Object.keys(servicesList).length).to.be.equal(1);
+    const isDeleted = sv.delete(data.uuid)
+    servicesList = sv.getByMessageType('message.test');
+    expect(isDeleted).to.be.true;
+
+    expect(Object.keys(servicesList).length).to.be.equal(0);
+  });
+  it('should return false if service already remove', () => {
+    sv.add(data)
+    sv.delete(data.uuid);
+    const isDeleted = sv.delete(data.uuid);
+    const servicesList = sv.getByMessageType('message.test');
+
+    expect(Object.keys(servicesList).length).to.be.equal(0);
+    expect(isDeleted).to.be.false;
   });
 });

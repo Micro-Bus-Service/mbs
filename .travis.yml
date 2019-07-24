@@ -3,9 +3,7 @@ node_js:
 - stable
 matrix:
   fast_finish: true
-cache:
-  directories:
-  - node_modules
+cache: false
 before_install:
 - npm install -g typescript@3.5.3
 - npm prune

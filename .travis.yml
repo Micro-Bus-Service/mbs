@@ -1,12 +1,22 @@
 language: node_js
-node_js :
-  - stable
+node_js:
+- stable
+matrix:
+  fast_finish: true
 cache:
   directories:
-    - node_modules
-git:
-  depth: 1
+  - node_modules
 before_install:
-  - npm install -g typescript@3.5.3
-install:
-  - npm install
+- npm install -g typescript@3.5.3
+- npm prune
+deploy:
+  provider: script
+  script: "./scripts/deploy.sh"
+  on:
+    branch: master
+    node: stable
+env:
+  global:
+  - NODE_ENV=production
+  - secure: llGvZLc3LXDKDRcQLkjD2DUhL8VyG0bUfcpBCTkKBpfS4Ex7dHLP7r8dVQRb8HdTAwOR1GcZw793ap6l3cO/CH1THTkf1XdqjPpUcnfaGprzpyBzIzvwKvq41J3ndQhDW8NafYnU/8Y5oJiNDEj4UC2zj7+B7DYgyj4W5ut403E8dA5Ilfua7C6mClZDG12D2qJVUwbfnLlQXSN1JVH/+5OZ407SmYSnLlkuZN3uIU7bTjnQK158O6ulZYbEgT7xqOsIySQCNzVq8qczJ8XLFeutu7EsltA7/LVEzMjRzR9HSAPagNGK1hm/NGtaNo2RX+ThN2+E4F27EQuGCgpthkMN7YmsLmfeD3KNc73b4bmS2+xwNwLudffu/cWLycynh20HCwOKHHSwvuwCPqbsEMs1+ixxstSUQ1JH3AtAUWLxq1mk2vQ5rlO68HQdilxcGDZAXoJTQBd5GLCTPGiWHnrkmlalpEMJD9NVdzg+cRpXyOyQEZZCqpDWWU5lAGZ3O06UQC3Dfza2YXkvwmiTZbA4VmAp4Dj7bt5X4Ly3V+Yh6ue+l0us2b+5nKXncdagGDB8/xr9DvAsaZpIqd3oVmsJU2lBZk6P2wgDlD1ef/5GT43usixShXxqusX2zaTPHtbufkfVY588cPb4jI8jDJFSJa3dLzHH/bveZYcLPlQ=
+  - GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/vilsafur/mbs.git

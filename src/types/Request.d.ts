@@ -11,3 +11,8 @@ declare interface RequestRegister {
 declare interface RequestDelete {
   "uuid": string,
 }
+
+declare interface RequestMessage {
+  "uuid": string,
+  "message": string|object,
+}

@@ -7,6 +7,6 @@ declare interface Service {
   "messageAccepted": string[]
 }
 
-declare interface ServiceInterface {
+declare interface ServicesInterface {
   [id: string]: Service
 }

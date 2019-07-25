@@ -1,12 +1,13 @@
 language: node_js
 node_js:
-- stable
+  - stable
 matrix:
   fast_finish: true
 cache: false
 before_install:
-- npm install -g typescript@3.5.3
-- npm prune
+  - npm install -g typescript@3.5.3
+  - npm install -g mocha
+  - npm prune
 install:
   - npm install
 deploy:

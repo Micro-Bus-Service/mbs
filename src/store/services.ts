@@ -83,9 +83,9 @@ export class Services {
    * Return the list of service listening a message type
    * 
    * @param {string} messageType The message type
-   * @return ServiceInterface
+   * @return ServicesInterface
    */
-  public getByMessageType(messageType: string): ServiceInterface {
+  public getByMessageType(messageType: string): ServicesInterface {
     let returned: ServicesInterface = {};
 
     for (const uuid in this.services) {

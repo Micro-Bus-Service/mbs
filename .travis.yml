@@ -10,6 +10,7 @@ before_install:
   - npm prune
 install:
   - npm install
+  - npm update
 deploy:
   provider: script
   script: "./scripts/deploy.sh"

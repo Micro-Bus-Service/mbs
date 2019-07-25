@@ -65,11 +65,6 @@ export default class serviceController {
           uuid: data.uuid
         });
       } else {
-        const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
-        errors.push('This instance already registered by this UUID : ' + uuid)
-        response.status(422);
-        response.json(errors);
-      } else {
         data.uuid = uuidv4();
         const isAdded = Services.add(data);
         if (isAdded) {
@@ -80,8 +75,9 @@ export default class serviceController {
             uuid: data.uuid,
             messageType: "service.added"
           });
-        } else {
-          errors.push('Problem when adding the service, maybe he is already added')
+        }  else {
+          const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
+          errors.push('This instance already registered by this UUID : ' + uuid)
           response.status(422);
           response.json(errors);
         }

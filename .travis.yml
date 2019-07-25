@@ -6,7 +6,6 @@ matrix:
 cache: false
 before_install:
   - npm install -g typescript@3.5.3
-  - npm install -g mocha
   - npm prune
 install:
   - npm install

@@ -2,7 +2,7 @@
 
 import { Request, Response, Application } from 'express';
 import Services from '../store/Services';
-const uuidv4 = require('uuid/v4');
+import uuidv4 from 'uuid/v4';
 
 export default class serviceController {
   /**

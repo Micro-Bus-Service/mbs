@@ -3,18 +3,19 @@ node_js:
   - stable
 matrix:
   fast_finish: true
-cache: false
+cache: 
+  npm: true
 before_install:
   - npm install -g typescript@3.5.3
   - npm prune
 install:
   - npm install
-deploy:
-  provider: script
-  script: "./scripts/deploy.sh"
-  on:
-    branch: master
-    node: stable 
+# deploy:
+#   provider: script
+#   script: "./scripts/deploy.sh"
+#   on:
+#     branch: master
+#     node: stable 
 env:
   global:
   - NODE_ENV=developpement

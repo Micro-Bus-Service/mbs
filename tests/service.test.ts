@@ -1,3 +1,5 @@
+/// <reference types="../src/types/Request" />
+
 import { Services } from '../src/store/services'
 import {expect} from 'chai';
 const uuidv4 = require('uuid/v4');

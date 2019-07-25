@@ -15,7 +15,7 @@ deploy:
   script: "./scripts/deploy.sh"
   on:
     branch: master
-    node: stable
+    node: stable 
 env:
   global:
   - NODE_ENV=production

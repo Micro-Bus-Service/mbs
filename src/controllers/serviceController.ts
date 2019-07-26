@@ -86,33 +86,22 @@ export default class serviceController {
   }
 
   public delete(request: Request, response: Response) {
-    const data = request.body as RequestDelete;
+    const uuid = request.params.uuid;
     let errors: string[] = [];
 
-    if (data !== undefined) {
-      if (data.uuid === undefined) {
-        errors.push('No uuid given');
-      }
+    const isDeleted = Services.delete(uuid);
+    if (isDeleted) {
+      response.status(201);
+      response.json({
+        serviceName: global.serviceName,
+        version: global.version,
+        uuid,
+        messageType: "service.deleted"
+      });
     } else {
-      errors.push('Problem with request : no body')
-    }
-
-    if (errors.length > 0) {
-    } else {
-      const isDeleted = Services.delete(data.uuid);
-      if (isDeleted) {
-        response.status(201);
-        response.json({
-          serviceName: global.serviceName,
-          version: global.version,
-          uuid: data.uuid,
-          messageType: "service.deleted"
-        });
-      } else {
-        errors.push('Problem when deleting service, maybe he is already deleted')
-        response.status(422);
-        response.json(errors);
-      }
+      errors.push('Problem when deleting service, maybe he is already deleted')
+      response.status(422);
+      response.json(errors);
     }
   }
 }

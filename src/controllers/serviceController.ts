@@ -85,6 +85,12 @@ export default class serviceController {
     }
   }
 
+  /**
+   * Delete a service registration
+   *
+   * @param request The request
+   * @param response The response
+   */
   public delete(request: Request, response: Response) {
     const uuid = request.params.uuid;
     let errors: string[] = [];

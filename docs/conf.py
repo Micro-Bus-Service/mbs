@@ -10,9 +10,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
 
 
@@ -25,11 +25,16 @@ author = 'Cyril POIDEVIN'
 
 # -- General configuration ---------------------------------------------------
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+# Add any Sphinx extension module names here, as strings. They can be extensions
+# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+	'sphinx.ext.intersphinx', 
+	'sphinx.ext.autodoc', 
+	'sphinx.ext.doctest',
+	'sphinx.ext.todo',
 ]
+
+autodoc_mock_imports = ['bs4', 'requests']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -40,6 +45,7 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 master_doc = 'index'
+source_suffix = '.rst'
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -54,3 +60,12 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+# -- Options for Epub output ---------------------------------------------------
+
+# Bibliographic Dublin Core info.
+epub_title = u'The RestructuredText Book'
+epub_author = u'Daniel Greenfeld, Eric Holscher'
+epub_publisher = u'Daniel Greenfeld, Eric Holscher'
+epub_copyright = u'2014, Daniel Greenfeld, Eric Holscher'

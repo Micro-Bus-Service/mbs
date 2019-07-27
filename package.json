@@ -4,6 +4,8 @@
   "description": "Bus pour microservice",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
     "dev": "concurrently -k -n \"Typescript,NodeJS\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
     "test": "nyc --reporter=html --reporter=text mocha -r ts-node/register tests/*.ts",
     "cover": "nyc report --reporter=text-lcov | coveralls",

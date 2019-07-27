@@ -2,7 +2,7 @@
 import { Application, Request, Response } from "express";
 import messagesController from "./controllers/MessagesController";
 import serviceController from "./controllers/ServiceController";
-import { Controllernterface } from "./types/Controllers";
+import { ControllerInterface } from "./types/Controllers";
 
 /**
  * Define all routes for this application
@@ -14,7 +14,7 @@ export default class Router {
    */
   private app: Application;
 
-  private controllers: Controllernterface = {
+  private controllers: ControllerInterface = {
     messagesController: new messagesController(),
     serviceController: new serviceController(),
   };

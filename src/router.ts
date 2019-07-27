@@ -15,8 +15,8 @@ export default class Router {
   private app: Application;
 
   private controllers: Controllernterface = {
-    messagesController: new messagesController(this.app),
-    serviceController: new serviceController(this.app),
+    messagesController: new messagesController(),
+    serviceController: new serviceController(),
   };
 
   /**

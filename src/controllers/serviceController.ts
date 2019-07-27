@@ -1,19 +1,10 @@
 /// <reference types="../types/Request" />
 
-import { Application, Request, Response } from "express";
+import { Request, Response } from "express";
 import uuidv4 from "uuid/v4";
 import Services from "../store/Services";
 
 export default class ServiceController {
-  /**
-   * The instance of Express App
-   */
-  private app: Application;
-
-  constructor(app: Application) {
-    this.app = app;
-  }
-
   /**
    * Register Service Controller
    *

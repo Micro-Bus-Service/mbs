@@ -9,12 +9,6 @@ Welcome to MBS's documentation!
 .. toctree::
    :maxdepth: 2
 
-   contents
+   install
+   support
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`

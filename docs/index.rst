@@ -12,6 +12,6 @@ Please provide feedback to `@vilsafur`_.
    :maxdepth: 2
    :caption: Table of contents:
 
-   docs/install
-   docs/support
+   install
+   support
 

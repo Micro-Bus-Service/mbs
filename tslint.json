@@ -6,7 +6,9 @@
     "jsRules": {},
     "rules": {
         "no-unused-expression": [true, "allow-new"],
-        "no-console": false
+        "no-console": false,
+        "no-namespace": [true, "allow-declarations"],
+        "interface-name": [true, "never-prefix"]
     },
     "rulesDirectory": []
 }

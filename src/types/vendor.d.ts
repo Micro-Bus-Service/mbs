@@ -1,6 +1,6 @@
-declare module NodeJS  {
+declare namespace NodeJS  {
   interface Global {
-    serviceName: string,
-    version: string
+    serviceName: string;
+    version: string;
   }
 }

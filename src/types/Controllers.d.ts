@@ -1,7 +1,7 @@
-import ServiceController from "../controllers/ServiceController";
 import MessagesController from "../controllers/messagesController";
+import ServiceController from "../controllers/ServiceController";
 
-declare interface Controllernterface {
-    serviceController: ServiceController,
-    messagesController: MessagesController,
+declare interface ControllerInterface {
+    serviceController: ServiceController;
+    messagesController: MessagesController;
 }

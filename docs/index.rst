@@ -1,13 +1,16 @@
-.. MBS documentation master file, created by
-   sphinx-quickstart on Tue Jul 23 23:03:57 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+====================
+MBS's documentation!
+====================
 
-Welcome to MBS's documentation!
-===============================
+Welcome to the MBS's documentation.
+
+Please provide feedback to `@vilsafur`_.
+
+.. _@vilsafur: http://twitter.com/vilsafur
 
 .. toctree::
    :maxdepth: 2
+   :caption: Table of contents:
 
    install
    support

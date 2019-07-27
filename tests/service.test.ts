@@ -1,69 +1,69 @@
 /// <reference types="../src/types/Request" />
 
-import { Services } from '../src/store/services'
-import {expect} from 'chai';
-const uuidv4 = require('uuid/v4');
+import { expect } from "chai";
+import uuidv4 from "uuid/v4";
+import { Services } from "../src/store/services";
 
 const data: RequestRegister = {
-  serviceName: "ServiceTest",
-  version: "0.1",
   ip: "10.75.10.0",
-  port: 8080,
-  url: "/api",
   messageType: [
     "message.test",
-    "message.test2"
+    "message.test2",
   ],
-  uuid: uuidv4()
-}
+  port: 8080,
+  serviceName: "ServiceTest",
+  url: "/api",
+  uuid: uuidv4(),
+  version: "0.1",
+};
 
-let sv: Services; 
+let sv: Services;
 
-describe('Service store', () => {
+describe("Service store", () => {
   beforeEach(() => {
-    sv = new Services;
+    sv = new Services();
   });
-  it('should add a service in store', () => {
+  it("should add a service in store", () => {
     const isAdded = sv.add(data);
 
-    expect(isAdded).to.be.true;
+    expect(isAdded).to.equal(true);
   });
-  it('should got an error if add 2 services with same ip and port', () => {
+  it("should got an error if add 2 services with same ip and port", () => {
     sv.add(data);
     const isAdded = sv.add(data);
 
-    expect(isAdded).to.be.false;
+    expect(isAdded).to.equal(false);
   });
-  it('should return a list of Service for message type given', () => {
+  it("should return a list of Service for message type given", () => {
     sv.add(data);
-    const servicesList = sv.getByMessageType('message.test');
+    const servicesList = sv.getByMessageType("message.test");
 
     expect(Object.keys(servicesList).length).to.be.equal(1);
   });
-  it('should return an empty list of Service for message type given', () => {
+  it("should return an empty list of Service for message type given", () => {
     sv.add(data);
-    const servicesList = sv.getByMessageType('message.test3');
+    const servicesList = sv.getByMessageType("message.test3");
 
     expect(Object.keys(servicesList).length).to.be.equal(0);
   });
-  it('should remove a service', () => {
-    sv.add(data)
-    let servicesList = sv.getByMessageType('message.test');
-    
+  it("should remove a service", () => {
+    sv.add(data);
+    let servicesList = sv.getByMessageType("message.test");
+
     expect(Object.keys(servicesList).length).to.be.equal(1);
-    const isDeleted = sv.delete(data.uuid)
-    servicesList = sv.getByMessageType('message.test');
-    expect(isDeleted).to.be.true;
+    const isDeleted = sv.delete(data.uuid);
+    servicesList = sv.getByMessageType("message.test");
+    expect(isDeleted).to.equal(true);
 
     expect(Object.keys(servicesList).length).to.be.equal(0);
   });
-  it('should return false if service already remove', () => {
-    sv.add(data)
+  it("should return false if service already remove", () => {
+    sv.add(data);
     sv.delete(data.uuid);
     const isDeleted = sv.delete(data.uuid);
-    const servicesList = sv.getByMessageType('message.test');
+    const servicesList = sv.getByMessageType("message.test");
 
     expect(Object.keys(servicesList).length).to.be.equal(0);
-    expect(isDeleted).to.be.false;
+    expect(isDeleted).to.equal(false);
   });
 });

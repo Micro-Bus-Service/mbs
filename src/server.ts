@@ -1,20 +1,20 @@
-import { Application } from 'express';
+import { Application } from "express";
 import express from "express";
-import Router from './router';
+import Router from "./router";
 
 /**
  * Allows to start an Express server
  */
 export default class Server {
     // private variable named "port" and its type must be number
-    private port: number; 
+    private port: number;
 
-    /** 
-     * Server's constructor. 
+    /**
+     * Server's constructor.
      * It takes a number as parameter.
      * It cannot take any other type else the project won't compile
      */
-    constructor(port:number){
+    constructor(port: number) {
         this.port = port;
     }
 
@@ -23,7 +23,7 @@ export default class Server {
      */
     public start(): void {
         const app: Application = express();
-        app.use(express.json())
+        app.use(express.json());
 
         new Router(app);
 

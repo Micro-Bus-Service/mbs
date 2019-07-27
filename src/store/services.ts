@@ -54,7 +54,7 @@ export class Services {
   /**
    * add a new Service
    * @param {RequestRegister} data
-   * 
+   *
    * @return {boolean} true if ok, false if already exist
    */
   public add(data: RequestRegister): boolean {
@@ -68,25 +68,25 @@ export class Services {
     }
 
     this.services[data.uuid] = {
-      name: data.serviceName,
-      version: data.version,
       ip: data.ip,
+      messageAccepted: data.messageType,
+      name: data.serviceName,
       port: data.port,
       url: data.url,
-      messageAccepted: data.messageType
-    }
+      version: data.version,
+    };
 
     return true;
   }
 
   /**
    * Return the list of service listening a message type
-   * 
+   *
    * @param {string} messageType The message type
    * @return ServicesInterface
    */
   public getByMessageType(messageType: string): ServicesInterface {
-    let returned: ServicesInterface = {};
+    const returned: ServicesInterface = {};
 
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {

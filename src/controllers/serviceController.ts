@@ -1,54 +1,54 @@
 /// <reference types="../types/Request" />
 
-import { Request, Response, Application } from 'express';
-import Services from '../store/Services';
-import uuidv4 from 'uuid/v4';
+import { Application, Request, Response } from "express";
+import uuidv4 from "uuid/v4";
+import Services from "../store/Services";
 
-export default class serviceController {
+export default class ServiceController {
   /**
    * The instance of Express App
    */
   private app: Application;
 
-  constructor (app: Application) {
+  constructor(app: Application) {
     this.app = app;
   }
 
   /**
    * Register Service Controller
-   * 
+   *
    * @param {Request} request The request
    * @param {Response} response The Response
    */
   public register(request: Request, response: Response) {
     const data = request.body as RequestRegister;
-    let errors: string[] = [];
+    const errors: string[] = [];
 
     if (data !== undefined) {
       if (data.serviceName === undefined) {
-        errors.push('No servicename defined');
+        errors.push("No servicename defined");
       }
 
       if (data.version === undefined) {
-        errors.push('No version defined');
+        errors.push("No version defined");
       }
 
       if (data.ip === undefined) {
-        errors.push('No ip defined');
+        errors.push("No ip defined");
       }
 
       if (data.port === undefined) {
-        errors.push('No port defined');
+        errors.push("No port defined");
       }
 
       if (data.url === undefined) {
-        errors.push('No url defined');
+        errors.push("No url defined");
       }
       if (data.messageType === undefined) {
-        errors.push('No message type defined');
+        errors.push("No message type defined");
       }
     } else {
-      errors.push('Problem with request : no body')
+      errors.push("Problem with request : no body");
     }
 
     if (errors.length > 0) {
@@ -61,23 +61,22 @@ export default class serviceController {
         response.status(201);
         response.json({
           serviceName: global.serviceName,
+          uuid: data.uuid,
           version: global.version,
-          uuid: data.uuid
         });
       } else {
         data.uuid = uuidv4();
-        const isAdded = Services.add(data);
-        if (isAdded) {
+        if (Services.add(data)) {
           response.status(201);
           response.json({
+            messageType: "service.added",
             serviceName: global.serviceName,
-            version: global.version,
             uuid: data.uuid,
-            messageType: "service.added"
+            version: global.version,
           });
         }  else {
           const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
-          errors.push('This instance already registered by this UUID : ' + uuid)
+          errors.push("This instance already registered by this UUID : " + uuid);
           response.status(422);
           response.json(errors);
         }
@@ -92,20 +91,20 @@ export default class serviceController {
    * @param response The response
    */
   public delete(request: Request, response: Response) {
-    const uuid = request.params.uuid;
-    let errors: string[] = [];
+    const uuid = request.params.uuid as string;
+    const errors: string[] = [];
 
     const isDeleted = Services.delete(uuid);
     if (isDeleted) {
       response.status(201);
       response.json({
+        messageType: "service.deleted",
         serviceName: global.serviceName,
-        version: global.version,
         uuid,
-        messageType: "service.deleted"
+        version: global.version,
       });
     } else {
-      errors.push('Problem when deleting service, maybe he is already deleted')
+      errors.push("Problem when deleting service, maybe he is already deleted");
       response.status(422);
       response.json(errors);
     }

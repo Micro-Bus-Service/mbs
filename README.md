@@ -10,3 +10,6 @@ MBS (Micro Bus Service) is a bus for microservice's architecture write in Typesc
 [![Documentation Status](https://readthedocs.org/projects/mbs/badge?version=latest)](http://mbs.readthedocs.io/?version=latest)
 
 The documentation of this project is on [read the docs](https://mbs.readthedocs.io)
+
+## Contributing
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)

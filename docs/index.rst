@@ -13,5 +13,8 @@ Please provide feedback to `@vilsafur`_.
    :caption: Table of contents:
 
    install
+   Api/register
+   Api/unregister
+   Api/queryService
    support
 

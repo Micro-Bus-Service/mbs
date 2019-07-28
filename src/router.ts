@@ -39,7 +39,7 @@ export default class Router {
     // Unregister service from the Microservice Bus
     this.app.delete("/services/:uuid", (request: Request, response: Response) => {
       const controller = this.controllers.serviceController;
-      controller.delete(request, response);
+      controller.unregister(request, response);
     });
 
     // route for POST /messages/:messageType

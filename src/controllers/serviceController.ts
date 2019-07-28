@@ -81,7 +81,7 @@ export default class ServiceController {
    * @param request The request
    * @param response The response
    */
-  public delete(request: Request, response: Response) {
+  public unregister(request: Request, response: Response) {
     const uuid = request.params.uuid as string;
     const errors: string[] = [];
 

@@ -5,13 +5,7 @@
       "strict": true,
       "module": "commonjs",
       "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "typeRoots" : [
-        "./node_modules/@types/",
-        "../node_modules/@types/",
-        "../../node_modules/@types/",
-        "./src/types"
-      ]
+      "allowSyntheticDefaultImports": true
   },
   "include": [
       "src/**/*"

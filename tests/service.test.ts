@@ -2,7 +2,7 @@
 
 import { expect } from "chai";
 import uuidv4 from "uuid/v4";
-import { Services } from "../src/store/services";
+import { Services } from "../src/store/Services";
 
 const data: RequestRegister = {
   ip: "10.75.10.0",

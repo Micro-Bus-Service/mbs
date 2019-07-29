@@ -78,4 +78,37 @@ describe("Service store", () => {
       expect(isDeleted).to.equal(false);
     });
   });
+
+  describe("isListened", () => {
+    it("should return true if messageType is listened", () => {
+      sv.add(data);
+      expect(sv.isListened("message.test")).to.be.equal(true);
+    });
+
+    it("should return false if messageType isn't listened", () => {
+      expect(sv.isListened("message.test")).to.be.equal(false);
+    });
+  });
+
+  describe("haveUUID", () => {
+    it("should return true if uuid exist", () => {
+      sv.add(data);
+      expect(sv.haveUUID(data.uuid)).to.be.equal(true);
+    });
+
+    it("should return false if uuid don't exist", () => {
+      expect(sv.haveUUID(data.uuid)).to.be.equal(false);
+    });
+  });
+
+  describe("getServiceUUIDByIpAndPort", () => {
+    it("should return the uuid if service already exist", () => {
+      sv.add(data);
+      expect(sv.getServiceUUIDByIpAndPort(data.ip, data.port)).to.be.equal(data.uuid);
+    });
+
+    it("should return false if the service don't exist", () => {
+      expect(sv.getServiceUUIDByIpAndPort(data.ip, data.port)).to.be.equal(false);
+    });
+  });
 });

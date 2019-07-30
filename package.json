@@ -11,7 +11,8 @@
     "cover": "nyc report --reporter=text-lcov | coveralls",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "doc:src": "typedoc --out docs/code ./src",
-    "doc:rtd": ".\\docs\\rtd\\make html"
+    "doc:rtd": ".\\docs\\rtd\\make html",
+    "doc": "concurrently -k -n \"doc:src,doc:rtd\" -p \"[{name}]\" -c \"blue,green\" \"npm run doc:src\" \"npm run doc:rtd\""
   },
   "keywords": [
     "Bus",

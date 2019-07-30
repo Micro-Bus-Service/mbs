@@ -107,6 +107,10 @@ export class Services {
     return returned;
   }
 
+  /**
+   * Delete a service by this uuid
+   * @param uuid The uuid
+   */
   public delete(uuid: string): boolean {
     if (this.services[uuid] !== undefined) {
       delete this.services[uuid];

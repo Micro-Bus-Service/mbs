@@ -96,4 +96,7 @@ typings/
 
 dist/
 .vscode
-docs/_build/
+###> Documentation
+docs/rtd/_build/
+docs/code/
+###< Documentation

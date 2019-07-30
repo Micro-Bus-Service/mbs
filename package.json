@@ -9,7 +9,9 @@
     "dev": "concurrently -k -n \"Typescript,NodeJS\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
     "test": "nyc --reporter=html --reporter=text mocha -r ts-node/register tests/*.ts",
     "cover": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "doc:src": "typedoc --out docs/code ./src",
+    "doc:rtd": ".\\docs\\rtd\\make html"
   },
   "keywords": [
     "Bus",
@@ -31,6 +33,7 @@
     "nyc": "^14.1.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
+    "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {

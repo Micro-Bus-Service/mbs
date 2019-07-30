@@ -33,6 +33,14 @@ export default class MessagesController {
     }
 
     if (errors.length > 0) {
+      const services = Services.getByMessageType(messageType);
+
+      for (const key in services) {
+        if (services.hasOwnProperty(key)) {
+          const service = services[key];
+        }
+      }
+
       response.status(422);
       response.json(errors);
     } else {

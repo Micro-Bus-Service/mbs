@@ -1,6 +1,12 @@
 /// <reference types="../types/Request" />
 /// <reference types="../types/Service" />
 
+import Service from "../entity/Service";
+
+declare interface ServicesInterface {
+  [uuid: string]: Service;
+}
+
 export class Services {
   /**
    * List of service registered
@@ -17,7 +23,7 @@ export class Services {
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {
         const service = this.services[uuid];
-        if (service.ip === ip && service.port === port) {
+        if (service.getIp() === ip && service.getPort() === port) {
           return uuid;
         }
       }
@@ -42,7 +48,7 @@ export class Services {
     for (const id in this.services) {
       if (this.services.hasOwnProperty(id)) {
         const service = this.services[id];
-        if (service.messageAccepted.indexOf(messageType) >= 0) {
+        if (service.getMessageAccepted().indexOf(messageType) >= 0) {
           return true;
         }
       }
@@ -61,20 +67,21 @@ export class Services {
     for (const id in this.services) {
       if (this.services.hasOwnProperty(id)) {
         const service = this.services[id];
-        if (service.ip === data.ip && service.port === data.port) {
+        if (service.getIp() === data.ip && service.getPort() === data.port) {
           return false;
         }
       }
     }
 
-    this.services[data.uuid] = {
+    this.services[data.uuid] = new Service({
       ip: data.ip,
       messageAccepted: data.messageType,
       name: data.serviceName,
       port: data.port,
       url: data.url,
+      uuid: data.uuid,
       version: data.version,
-    };
+    });
 
     return true;
   }
@@ -91,7 +98,7 @@ export class Services {
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {
         const service = this.services[uuid];
-        if (service.messageAccepted.indexOf(messageType) >= 0) {
+        if (service.getMessageAccepted().indexOf(messageType) >= 0) {
           returned[uuid] = service;
         }
       }

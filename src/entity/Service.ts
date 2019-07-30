@@ -74,4 +74,15 @@ export default class Service {
     public setUuid?(uuid: string): void {
         this.uuid = uuid;
     }
+
+    public sendMessage(message: string|object) {
+        const url = "http://" + this.ip + ":" + this.port + "/" + this.url;
+        return fetch(url, {
+            body: JSON.stringify(message),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+        }).then((response) => response.json());
+    }
 }

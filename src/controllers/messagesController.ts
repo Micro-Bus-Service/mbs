@@ -38,6 +38,7 @@ export default class MessagesController {
       for (const key in services) {
         if (services.hasOwnProperty(key)) {
           const service = services[key];
+          service.sendMessage(data.message);
         }
       }
 

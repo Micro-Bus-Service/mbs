@@ -1,6 +1,7 @@
 import { Application } from "express";
 import express from "express";
 import Router from "./router";
+import logger from "./utils/logger";
 
 /**
  * Allows to start an Express server
@@ -29,7 +30,7 @@ export default class Server {
 
         // Server is listening to port defined when Server was initiated
         app.listen(this.port, () => {
-            console.log("Server is running on port " + this.port);
+            logger.info("Server is running on port " + this.port);
         });
     }
 }

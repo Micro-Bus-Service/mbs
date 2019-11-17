@@ -1,4 +1,3 @@
-import {} from "./types/Request";
 import { Application, Request, Response } from "express";
 import messagesController from "./controllers/messagesController";
 import serviceController from "./controllers/serviceController";

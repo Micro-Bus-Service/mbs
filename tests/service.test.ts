@@ -1,4 +1,4 @@
-/// <reference types="../src/types/Request" />
+import {RequestRegister} from "../src/types/Request";
 
 import { expect } from "chai";
 import uuidv4 from "uuid/v4";

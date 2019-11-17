@@ -1,7 +1,7 @@
-/// <reference types="./types/Request" />
+import {} from "./types/Request";
 import { Application, Request, Response } from "express";
-import messagesController from "./controllers/MessagesController";
-import serviceController from "./controllers/ServiceController";
+import messagesController from "./controllers/messagesController";
+import serviceController from "./controllers/serviceController";
 import { ControllerInterface } from "./types/Controllers";
 
 /**

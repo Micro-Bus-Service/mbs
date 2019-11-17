@@ -1,4 +1,4 @@
-declare interface ServiceInterface {
+export interface ServiceInterface {
   "name": string;
   "version": string;
   "ip": string;

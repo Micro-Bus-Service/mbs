@@ -1,4 +1,4 @@
-/// <reference types="../types/Service" />
+import { ServiceInterface } from "../types/Service";
 
 export default class Service {
     /** @var {string} name The name; */

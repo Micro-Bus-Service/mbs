@@ -1,5 +1,5 @@
-/// <reference types="../types/Request" />
-/// <reference types="../types/Service" />
+import { RequestRegister } from "../types/Request";
+import {} from "../types/Service";
 
 import Service from "../entity/Service";
 

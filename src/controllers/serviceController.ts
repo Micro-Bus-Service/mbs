@@ -1,4 +1,4 @@
-/// <reference types="../types/Request" />
+import { RequestRegister } from "../types/Request";
 
 import { Request, Response } from "express";
 import uuidv4 from "uuid/v4";

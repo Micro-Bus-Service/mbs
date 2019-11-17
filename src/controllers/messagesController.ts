@@ -1,4 +1,4 @@
-/// <reference types="../types/Request" />
+import { RequestMessage } from "../types/Request";
 
 import { Request, Response } from "express";
 import Services from "../store/Services";

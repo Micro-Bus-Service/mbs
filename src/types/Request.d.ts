@@ -1,4 +1,4 @@
-declare interface RequestRegister {
+export interface RequestRegister {
   "serviceName": string;
   "version": string;
   "ip": string;
@@ -8,11 +8,11 @@ declare interface RequestRegister {
   "uuid": string;
 }
 
-declare interface RequestDelete {
+export interface RequestDelete {
   "uuid": string;
 }
 
-declare interface RequestMessage {
+export interface RequestMessage {
   "uuid": string;
   "message": string|object;
 }

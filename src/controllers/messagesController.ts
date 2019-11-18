@@ -1,11 +1,11 @@
-import { RequestMessage } from "../types/Request";
-
+import Services from "@/store/Services";
+import { RequestMessage } from "@/types/Request";
+import logger from "@/utils/logger";
 import { Request, Response } from "express";
-import Services from "../store/Services";
 
 export default class MessagesController {
   /**
-   * Register Service Controller
+   * Retrieve a message and send it to the corresponding services
    *
    * @param {Request} request The request
    * @param {Response} response The Response
@@ -33,7 +33,13 @@ export default class MessagesController {
     }
 
     if (errors.length > 0) {
+      logger.error({messageType, data, errors});
+
+      response.status(422);
+      response.json(errors);
+    } else {
       const services = Services.getByMessageType(messageType);
+      logger.info({messageType, data});
 
       for (const key in services) {
         if (services.hasOwnProperty(key)) {
@@ -41,10 +47,6 @@ export default class MessagesController {
           service.sendMessage(data.message);
         }
       }
-
-      response.status(422);
-      response.json(errors);
-    } else {
       response.status(201);
       response.json({
         serviceName: global.serviceName,

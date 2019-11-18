@@ -5,6 +5,7 @@
     "target": "es6",
     "strict": true,
     "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
@@ -14,6 +15,10 @@
     },
   },
   "include": [
-      "src/**/*.ts"
+      "src/**/*.ts",
+      "package.json"
+  ],
+  "exclude": [
+    "node_modules",
   ]
 }

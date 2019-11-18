@@ -1,7 +1,7 @@
+import Router from "@/utils/router";
 import { Application } from "express";
 import express from "express";
-import Router from "./router";
-import logger from "./utils/logger";
+import logger from "./logger";
 
 /**
  * Allows to start an Express server

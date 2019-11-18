@@ -1,7 +1,7 @@
 import { Application, Request, Response } from "express";
-import messagesController from "./controllers/messagesController";
-import serviceController from "./controllers/serviceController";
-import { ControllerInterface } from "./types/Controllers";
+import messagesController from "../controllers/messagesController";
+import serviceController from "../controllers/serviceController";
+import { ControllerInterface } from "../types/Controllers";
 
 /**
  * Define all routes for this application

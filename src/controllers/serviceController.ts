@@ -1,8 +1,8 @@
-import { RequestRegister } from "../types/Request";
-
+import Services from "@/store/Services";
+import { RequestRegister } from "@/types/Request";
+import logger from "@/utils/logger";
 import { Request, Response } from "express";
 import uuidv4 from "uuid/v4";
-import Services from "../store/Services";
 
 export default class ServiceController {
   /**
@@ -43,12 +43,14 @@ export default class ServiceController {
     }
 
     if (errors.length > 0) {
+      logger.error({ data, errors});
+
       response.status(422);
       response.json(errors);
     } else {
       data.uuid = uuidv4();
-      const isAdded = Services.add(data);
-      if (isAdded) {
+      if (Services.add(data)) {
+        logger.info("Add service : " + data.uuid);
         response.status(201);
         response.json({
           serviceName: global.serviceName,
@@ -58,6 +60,7 @@ export default class ServiceController {
       } else {
         data.uuid = uuidv4();
         if (Services.add(data)) {
+          logger.info("Add service : " + data.uuid);
           response.status(201);
           response.json({
             messageType: "service.added",
@@ -68,6 +71,8 @@ export default class ServiceController {
         }  else {
           const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
           errors.push("This instance already registered by this UUID : " + uuid);
+          logger.error({ data, errors});
+
           response.status(422);
           response.json(errors);
         }

@@ -1,12 +1,5 @@
 {
-    "extension": [
-      ".ts"
-    ],
-    "reporter": [
-      "html",
-      "text-summary"
-    ],
-    "cache": true,
-    "sourceMap": false,
-    "instrument": false
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "include": "src"
 }

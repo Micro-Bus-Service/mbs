@@ -1,8 +1,8 @@
-import {RequestRegister} from "../src/types/Request";
+import {RequestRegister} from "../../src/types/Request";
 
 import { expect } from "chai";
 import uuidv4 from "uuid/v4";
-import { Services } from "../src/store/Services";
+import { Services } from "../../src/store/Services";
 
 const data: RequestRegister = {
   ip: "10.75.10.0",

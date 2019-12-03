@@ -7,6 +7,9 @@ export default class MessagesController {
   /**
    * Retrieve a message and send it to the corresponding services
    *
+   * @todo Restrict sending messages by Service Type
+   * @todo Return the message of the service (s) requiring a return
+   *
    * @param {Request} request The request
    * @param {Response} response The Response
    */

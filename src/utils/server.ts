@@ -26,7 +26,8 @@ export default class Server {
         const app: Application = express();
         app.use(express.json());
 
-        new Router(app);
+        const router = new Router(app);
+        router.getRoutes();
 
         // Server is listening to port defined when Server was initiated
         app.listen(this.port, () => {

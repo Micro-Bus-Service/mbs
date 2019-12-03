@@ -23,10 +23,9 @@ export default class Router {
    */
   constructor(app: Application) {
     this.app = app;
-    this.getRoutes();
   }
 
-  private getRoutes(): void {
+  public getRoutes(): void {
     // route for POST /services
     // Register service to the Microservice Bus
     this.app.post("/services", (request: Request, response: Response) => {

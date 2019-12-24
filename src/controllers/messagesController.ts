@@ -1,13 +1,16 @@
+import Service from "@/entity/Service";
 import Services from "@/store/Services";
 import { RequestMessage } from "@/types/Request";
+import { ServicesInterface } from "@/types/Service";
 import logger from "@/utils/logger";
 import { Request, Response } from "express";
 
 export default class MessagesController {
+  private lastUuid: {[name: string]: string} = {};
+
   /**
    * Retrieve a message and send it to the corresponding services
    *
-   * @todo Restrict sending messages by Service Type
    * @todo Return the message of the service (s) requiring a return
    *
    * @param {Request} request The request
@@ -41,20 +44,43 @@ export default class MessagesController {
       response.status(422);
       response.json(errors);
     } else {
-      const services = Services.getByMessageType(messageType);
+      const servicesByName = Services.getByMessageType(messageType);
       logger.info({messageType, data});
 
-      for (const key in services) {
-        if (services.hasOwnProperty(key)) {
-          const service = services[key];
+      for (const name in servicesByName) {
+        if (servicesByName.hasOwnProperty(name)) {
+          const service = this.getNextService(name, servicesByName[name]);
           service.sendMessage(data.message);
         }
       }
+
       response.status(201);
       response.json({
         serviceName: global.serviceName,
         version: global.version,
       });
     }
+  }
+
+  /**
+   * Return the next service to call
+   *
+   * @param name The name of service
+   * @param services The list of services with this name
+   */
+  private getNextService(name: string, services: ServicesInterface): Service {
+    if (this.lastUuid[name] === undefined) {
+      this.lastUuid[name] = Object.keys(services)[0];
+      return services[this.lastUuid[name]];
+    }
+
+    const position = Object.keys(services).indexOf(this.lastUuid[name]);
+    if (position === -1 || position === Object.keys(services).length + 1) {
+      this.lastUuid[name] = Object.keys(services)[0];
+    } else {
+      this.lastUuid[name] = Object.keys(services)[position + 1];
+    }
+
+    return services[this.lastUuid[name]];
   }
 }

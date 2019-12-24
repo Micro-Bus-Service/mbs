@@ -1,10 +1,7 @@
-import { RequestRegister } from "../types/Request";
+import { RequestRegister } from "@/types/Request";
+import { ServicesByNameInterface, ServicesInterface } from "@/types/Service";
 
 import Service from "../entity/Service";
-
-declare interface ServicesInterface {
-  [uuid: string]: Service;
-}
 
 export class Services {
   /**
@@ -91,14 +88,18 @@ export class Services {
    * @param {string} messageType The message type
    * @return ServicesInterface
    */
-  public getByMessageType(messageType: string): ServicesInterface {
-    const returned: ServicesInterface = {};
+  public getByMessageType(messageType: string): ServicesByNameInterface {
+    const returned: ServicesByNameInterface = {};
 
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {
         const service = this.services[uuid];
+
         if (service.getMessageAccepted().indexOf(messageType) >= 0) {
-          returned[uuid] = service;
+          if (returned[service.getName()] === undefined) {
+            returned[service.getName()] = {};
+          }
+          returned[service.getName()][uuid] = service;
         }
       }
     }

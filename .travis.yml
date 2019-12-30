@@ -6,8 +6,7 @@ matrix:
 cache: 
   npm: true
 before_install:
-  - npm install -g typescript@3.5.3
-  - npm prune
+  - npm install -g typescript@lastest
 install:
   - npm install
 script:  

@@ -1,9 +1,10 @@
 import 'module-alias/register';
 import Server from "@/utils/server";
 
-// import pjson from "../package.json";
-
 const port = 9000;
+
+require('dotenv').config();
+require('@/utils/db');
 
 global.serviceName = "bus";
 global.version = "v" + process.env.npm_package_version;

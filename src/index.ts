@@ -1,5 +1,6 @@
-import Server from "@/utils/server";
 import "module-alias/register";
+// tslint:disable-next-line: ordered-imports
+import Server from "@/utils/server";
 
 // import pjson from "../package.json";
 

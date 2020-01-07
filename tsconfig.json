@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "outDir": "dist",
     "target": "es6",
     "strict": true,
@@ -10,15 +10,14 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": [
-        "src/*"
+        "./*"
       ]
     },
   },
   "include": [
-      "src/**/*.ts",
-      "package.json"
+      "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }

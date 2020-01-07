@@ -1,13 +1,13 @@
 import Service from "@/entity/Service";
 
 export interface ServiceInterface {
-  "name": string;
-  "version": string;
-  "ip": string;
-  "port": number;
-  "url": string;
-  "messageAccepted": string[];
-  "uuid"?: string
+  name: string;
+  version: string;
+  ip: string;
+  port: number;
+  url: string;
+  messageAccepted: string[];
+  uuid?: string;
 }
 
 export interface ServicesInterface {
@@ -17,5 +17,5 @@ export interface ServicesInterface {
 export interface ServicesByNameInterface {
   [serviceName: string]: {
     [uuid: string]: Service;
-  }
+  };
 }

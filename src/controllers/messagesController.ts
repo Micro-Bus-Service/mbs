@@ -6,7 +6,7 @@ import logger from "@/utils/logger";
 import { Request, Response } from "express";
 
 export default class MessagesController {
-  private lastUuid: {[name: string]: string} = {};
+  private lastUuid: { [name: string]: string } = {};
 
   /**
    * Retrieve a message and send it to the corresponding services
@@ -37,15 +37,15 @@ export default class MessagesController {
     }
 
     if (errors.length > 0) {
-      logger.error({messageType, data, errors});
+      logger.error({ messageType, data, errors });
 
       response.status(422);
       response.json(errors);
     } else {
       const servicesByName = Services.getByMessageType(messageType);
-      logger.info({messageType, data});
+      logger.info({ messageType, data });
 
-      const responses: {[serviceName: string]: JSON} = {};
+      const responses: { [serviceName: string]: JSON } = {};
 
       for (const name in servicesByName) {
         if (servicesByName.hasOwnProperty(name)) {
@@ -53,7 +53,10 @@ export default class MessagesController {
           const res = await service.sendMessage(data.message);
           const serviceName = service.getName();
 
-          if (data.responseFrom !== undefined && data.responseFrom.indexOf(serviceName) !== -1) {
+          if (
+            data.responseFrom !== undefined &&
+            data.responseFrom.indexOf(serviceName) !== -1
+          ) {
             responses[serviceName] = res;
           }
         }

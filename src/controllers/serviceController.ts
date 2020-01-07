@@ -43,7 +43,7 @@ export default class ServiceController {
     }
 
     if (errors.length > 0) {
-      logger.error({ data, errors});
+      logger.error({ data, errors });
 
       response.status(422);
       response.json(errors);
@@ -68,10 +68,12 @@ export default class ServiceController {
             uuid: data.uuid,
             version: global.version,
           });
-        }  else {
+        } else {
           const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
-          errors.push("This instance already registered by this UUID : " + uuid);
-          logger.error({ data, errors});
+          errors.push(
+            "This instance already registered by this UUID : " + uuid,
+          );
+          logger.error({ data, errors });
 
           response.status(422);
           response.json(errors);

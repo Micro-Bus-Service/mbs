@@ -9,7 +9,9 @@
     "dev": "concurrently -k -n \"Typescript,NodeJS\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
     "test": "nyc mocha",
     "cover": "tsc && nyc mocha && nyc report --reporter=text-lcov | coveralls",
+    "format": "prettier --write 'src/**/*.ts'",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "clean": "npm run format && npm run lint",
     "doc:src": "typedoc --out docs/code ./src",
     "doc:rtd": ".\\docs\\rtd\\make html",
     "doc": "concurrently -k -n \"doc:src,doc:rtd\" -p \"[{name}]\" -c \"blue,green\" \"npm run doc:src\" \"npm run doc:rtd\""
@@ -34,9 +36,11 @@
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.19.4",
     "nyc": "^14.1.1",
+    "prettier": "^1.19.1",
     "source-map-support": "^0.5.16",
     "ts-node": "^8.5.4",
     "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typedoc": "^0.15.5",
     "typescript": "^3.7.4"

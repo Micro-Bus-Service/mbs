@@ -15,7 +15,7 @@ export class Services {
    * @param {string} ip The ip
    * @param {number} port The port
    */
-  public getServiceUUIDByIpAndPort(ip: string, port: number): string|false {
+  public getServiceUUIDByIpAndPort(ip: string, port: number): string | false {
     for (const uuid in this.services) {
       if (this.services.hasOwnProperty(uuid)) {
         const service = this.services[uuid];

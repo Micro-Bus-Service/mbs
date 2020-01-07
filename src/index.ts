@@ -1,5 +1,5 @@
-import 'module-alias/register';
 import Server from "@/utils/server";
+import "module-alias/register";
 
 // import pjson from "../package.json";
 

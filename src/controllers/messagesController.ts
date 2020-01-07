@@ -11,12 +11,10 @@ export default class MessagesController {
   /**
    * Retrieve a message and send it to the corresponding services
    *
-   * @todo Return the message of the service (s) requiring a return
-   *
    * @param {Request} request The request
    * @param {Response} response The Response
    */
-  public getMessage(request: Request, response: Response) {
+  public async getMessage(request: Request, response: Response) {
     const messageType = request.params.messageType;
     const data = request.body as RequestMessage;
     const errors: string[] = [];
@@ -47,15 +45,23 @@ export default class MessagesController {
       const servicesByName = Services.getByMessageType(messageType);
       logger.info({messageType, data});
 
+      const responses: {[serviceName: string]: JSON} = {};
+
       for (const name in servicesByName) {
         if (servicesByName.hasOwnProperty(name)) {
           const service = this.getNextService(name, servicesByName[name]);
-          service.sendMessage(data.message);
+          const res = await service.sendMessage(data.message);
+          const serviceName = service.getName();
+
+          if (data.responseFrom !== undefined && data.responseFrom.indexOf(serviceName) !== -1) {
+            responses[serviceName] = res;
+          }
         }
       }
 
       response.status(201);
       response.json({
+        responses,
         serviceName: global.serviceName,
         version: global.version,
       });

@@ -15,4 +15,6 @@ export interface RequestDelete {
 export interface RequestMessage {
   "uuid": string;
   "message": string|object;
+  "responseFrom"?: string[];
 }
+

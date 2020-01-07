@@ -1,4 +1,4 @@
-import Services from "@/store/Services";
+import Services from "@/Repository/ServicesRepository";
 import { RequestRegister } from "@/types/Request";
 import logger from "@/utils/logger";
 import { Request, Response } from "express";

@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import logger from './logger';
 
 const dialect = process.env.DB_ENGINE as "sqlite" | "mysql" | "postgres" | "mariadb" | "mssql" | undefined || 'mysql';
 const host = process.env.DB_HOST || undefined;
@@ -12,5 +13,8 @@ export default new Sequelize(name, user, password, {
   dialect,
   host,
   port,
-  storage
+  storage,
+  logging: (...msg) => {
+    logger.debug(msg);
+  }
 });

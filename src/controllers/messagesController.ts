@@ -1,5 +1,5 @@
 import Service from "@/entity/Service";
-import Services from "@/Repository/ServicesRepository";
+import Services from "@/repository/ServicesRepository";
 import { RequestMessage } from "@/types/Request";
 import { ServicesInterface } from "@/types/Service";
 import logger from "@/utils/logger";

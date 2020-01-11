@@ -2,7 +2,7 @@ import { RequestRegister } from "@/types/Request";
 import { ServicesByNameInterface, ServicesInterface } from "@/types/Service";
 
 import Service from "../entity/Service";
-import MessageType from "@/entity/MessageType";
+import MessageType from "../entity/MessageType";
 
 export class Services {
   /**
@@ -17,12 +17,14 @@ export class Services {
    * @param {number} port The port
    */
   public async getServiceUUIDByIpAndPort(ip: string, port: number): Promise<string|undefined> {
-    const service = await Service.query().findOne({
-      ip,
-      port
+    const service = await Service.findOne({
+      where: {
+        ip,
+        port
+      }
     });
     
-    return service.uuid;
+    return service ? service.uuid : undefined;
   }
 
   /**
@@ -31,7 +33,7 @@ export class Services {
    * @param {string} uuid The uuid to search
    */
   public async haveUUID(uuid: string): Promise<boolean> {
-    const service = await Service.query().findOne({uuid});
+    const service = await Service.findOne({where:{uuid}});
 
     return service !== undefined;
   }
@@ -41,10 +43,10 @@ export class Services {
    * @param {string} messageType The message's type
    */
   public async isListened(messageType: string): Promise<boolean> {
-    const mt = await MessageType.query().findOne({name: messageType});
-    const services = await mt.$relatedQuery('services') as Service[];
-
-    return services.length > 0;
+    const mt = await MessageType.findOne({where:{name: messageType}});
+    const services = await mt?.getServices();
+    
+    return services !== undefined && services.length > 0;
   }
 
   /**
@@ -54,13 +56,37 @@ export class Services {
    * @return {boolean} true if ok, false if already exist
    */
   public async add(data: RequestRegister): Promise<boolean> {
-    const service = await Service.query().findOne(data)
+    const messagesTypes: MessageType[] = [];
 
-    if (service) {
-      return false;
-    }
+    data.messageType.map(async (messageType) => {
+      const mt = await MessageType.findOrCreate({
+        where: {
+          name: messageType
+        }
+      })
 
-    await Service.query().insert(data);
+      if (mt instanceof MessageType) {
+        messagesTypes.push(mt);
+      }
+    })
+
+    await Service.findOrCreate({
+      where: {
+        serviceName: data.serviceName,
+        version: data.version,
+        ip: data.ip,
+        port: data.port,
+        url: data.url,
+        uuid: data.uuid
+      }
+    })
+    .then((service) => {
+      messagesTypes.map((messageType) => {
+        if (service instanceof Service) {
+          messageType.addService(service);
+        }
+      })
+    });
 
     return true;
   }
@@ -73,13 +99,15 @@ export class Services {
    */
   public async getByMessageType(messageType: string): Promise<ServicesByNameInterface> {
     const returned: ServicesByNameInterface = {};
-    const mt = await MessageType.query().findOne({name: messageType});
-    const services = await mt.$relatedQuery('services') as Service[];
+    const mt = await MessageType.findOne({where: {name: messageType}});
+    const services = await mt?.getServices();
 
-    for (const service of services) {
-      if (service.name !== undefined && service.uuid !== undefined) {
-        returned[service.name][service.uuid] = service;
-      }
+    if (services) {
+      services.map((service) => {
+        if (service.name !== undefined && service.uuid !== undefined) {
+          returned[service.name][service.uuid] = service;
+        }
+      })
     }
 
     return returned;
@@ -89,9 +117,12 @@ export class Services {
    * Delete a service by this uuid
    * @param uuid The uuid
    */
-  public delete(uuid: string): boolean {
-    if (this.services[uuid] !== undefined) {
-      delete this.services[uuid];
+  public async delete(uuid: string): Promise<boolean> {
+    const nbLineDelete = await Service.destroy({
+      where: {uuid}
+    })
+
+    if (nbLineDelete === 1) {
       return true;
     }
 

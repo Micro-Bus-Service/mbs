@@ -1,34 +1,21 @@
-import { Model, JSONSchema } from 'objection';
+import { Model } from 'sequelize';
+import { HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, Association, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin } from 'sequelize';
 import Service from './Service';
 
 export default class MessageType extends Model {
-  static tableName = 'messageType';
-  
-  static relationMappings = {
-    services: {
-      relation: Model.ManyToManyRelation,
-      modelClass: Service,
-      join: {
-        from: 'messageType.id',
-        through: {
-          from: 'messageType_service.messageTypeId',
-          to: 'messageType_service.serviceId'
-        },
-        to: 'service.id'
-      }
-    }
-  };
+  public id!: number;
+  public name!: string;
 
-  static get jsonSchema(): JSONSchema {
-    return {
-      type: 'object',
-      required: [
-        'name'
-      ],
-      properties: {
-        id: { type: 'integer' },
-        name: { type: 'string', minLength: 1, maxLength: 255 }
-      }
-    }
-  }
+  // timestamps!
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public getServices!: HasManyGetAssociationsMixin<Service>;
+  public addService!: HasManyAddAssociationMixin<Service, number>;
+  public hasService!: HasManyHasAssociationMixin<Service, number>;
+  public countServices!: HasManyCountAssociationsMixin;
+
+  public static associations: {
+    Services: Association<MessageType, Service>;
+  };
 }

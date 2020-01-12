@@ -1,4 +1,4 @@
-import Service from "@/entity/Service";
+import Service from "@/models/Service";
 import Services from "@/repository/ServicesRepository";
 import { RequestMessage } from "@/types/Request";
 import { ServicesInterface } from "@/types/Service";

@@ -1,8 +1,7 @@
-import { Model } from 'sequelize';
-import { HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, Association, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin } from 'sequelize';
-import MessageType from './MessageType';
+import { Sequelize, DataTypes, Model, HasManyCreateAssociationMixin, HasManyCountAssociationsMixin, HasManyHasAssociationMixin, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Association } from "sequelize";
+import { MessageType } from "./MessageType";
 
-export default class Service extends Model {
+export class Service extends Model {
   /** @var {string} name The name; */
   public name!: string;
   /** @var {string} version The version */
@@ -27,7 +26,7 @@ export default class Service extends Model {
   public hasMessageType!: HasManyHasAssociationMixin<MessageType, number>;
   public countMessageTypes!: HasManyCountAssociationsMixin;
   public createMessageType!: HasManyCreateAssociationMixin<MessageType>;
-
+  
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.
   public readonly MessageTypes?: MessageType[]; // Note this is optional since it's only populated when explicitly requested in code
@@ -52,4 +51,37 @@ export default class Service extends Model {
           method: "POST",
       }).then((response) => response.json());
   }
+}
+
+export default (sequelize: Sequelize) => {
+  Service.init({
+    name: {
+      type: DataTypes.STRING
+    },
+    version: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    ip: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    port: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    uuid: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  },
+  {
+    sequelize
+  })
+  
+  return Service;
 }

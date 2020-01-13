@@ -1,4 +1,4 @@
-import Service from "@/models/Service";
+import { Service } from "@/models/Service";
 import Services from "@/repositories/ServicesRepository";
 import { RequestMessage } from "@/types/Request";
 import { ServicesInterface } from "@/types/Service";
@@ -21,7 +21,7 @@ export default class MessagesController {
     const data = request.body as RequestMessage;
     const errors: string[] = [];
 
-    if (!Services.isListened(messageType)) {
+    if (!await Services.isListened(messageType)) {
       errors.push("No registered service listens to this messageType");
     }
 

@@ -2,7 +2,12 @@ import { Sequelize } from 'sequelize';
 import logger from './logger';
 import MessageType from '../models/MessageType';
 import Service from '../models/Service';
-import { db } from '@/types/Database';
+import { db } from '@/types/Database'; 
+
+import path from 'path';
+
+const p = path.resolve(process.cwd(), '.env');
+require('dotenv').config({path: p});
 
 const dialect = process.env.DB_ENGINE as "sqlite" | "mysql" | "postgres" | "mariadb" | "mssql" | undefined || 'mysql';
 const host = process.env.DB_HOST || undefined;

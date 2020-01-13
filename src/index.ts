@@ -1,10 +1,10 @@
 import 'module-alias/register';
 import Server from "@/utils/server";
+import db from './utils/db';
 
 const port = 9000;
 
-require('dotenv').config();
-require('@/utils/db');
+db.sequelize.sync();
 
 global.serviceName = "bus";
 global.version = "v" + process.env.npm_package_version;

@@ -1,5 +1,5 @@
-import Service from "@/entity/Service";
-import Services from "@/store/Services";
+import { Service } from "@/models/Service";
+import Services from "@/repositories/ServicesRepository";
 import { RequestMessage } from "@/types/Request";
 import { ServicesInterface } from "@/types/Service";
 import logger from "@/utils/logger";
@@ -16,12 +16,12 @@ export default class MessagesController {
    * @param {Request} request The request
    * @param {Response} response The Response
    */
-  public getMessage(request: Request, response: Response) {
+  public async getMessage(request: Request, response: Response) {
     const messageType = request.params.messageType;
     const data = request.body as RequestMessage;
     const errors: string[] = [];
 
-    if (!Services.isListened(messageType)) {
+    if (!await Services.isListened(messageType)) {
       errors.push("No registered service listens to this messageType");
     }
 
@@ -44,8 +44,8 @@ export default class MessagesController {
       response.status(422);
       response.json(errors);
     } else {
-      const servicesByName = Services.getByMessageType(messageType);
-      logger.info({ messageType, data });
+      const servicesByName = await Services.getByMessageType(messageType);
+      logger.info({messageType, data});
 
       for (const name in servicesByName) {
         if (servicesByName.hasOwnProperty(name)) {

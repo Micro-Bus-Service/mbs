@@ -1,4 +1,4 @@
-import Service from "@/entity/Service";
+import { Service } from "@/models/Service";
 
 export interface ServiceInterface {
   name: string;

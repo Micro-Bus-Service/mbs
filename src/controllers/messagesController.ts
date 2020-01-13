@@ -21,7 +21,7 @@ export default class MessagesController {
     const data = request.body as RequestMessage;
     const errors: string[] = [];
 
-    if (!await Services.isListened(messageType)) {
+    if (!(await Services.isListened(messageType))) {
       errors.push("No registered service listens to this messageType");
     }
 
@@ -45,7 +45,7 @@ export default class MessagesController {
       response.json(errors);
     } else {
       const servicesByName = await Services.getByMessageType(messageType);
-      logger.info({messageType, data});
+      logger.info({ messageType, data });
 
       for (const name in servicesByName) {
         if (servicesByName.hasOwnProperty(name)) {

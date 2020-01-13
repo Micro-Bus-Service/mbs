@@ -1,7 +1,20 @@
-import { Sequelize, DataTypes, Model, HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, HasManyCountAssociationsMixin, Association } from "sequelize";
+import {
+  Association,
+  DataTypes,
+  HasManyAddAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyGetAssociationsMixin,
+  HasManyHasAssociationMixin,
+  Model,
+  Sequelize,
+} from "sequelize";
 import { Service } from "./Service";
 
 export class MessageType extends Model {
+  public static associations: {
+    Services: Association<MessageType, Service>;
+  };
+
   public id!: number;
   public name!: string;
 
@@ -13,21 +26,17 @@ export class MessageType extends Model {
   public addService!: HasManyAddAssociationMixin<Service, number>;
   public hasService!: HasManyHasAssociationMixin<Service, number>;
   public countServices!: HasManyCountAssociationsMixin;
-
-  public static associations: {
-    Services: Association<MessageType, Service>;
-  };
 }
 
 export default (sequelize: Sequelize) => {
   MessageType.init(
-  {
-    name: DataTypes.STRING,
-  },
-  {
-    sequelize
-  }
-  )
-  
+    {
+      name: DataTypes.STRING,
+    },
+    {
+      sequelize,
+    },
+  );
+
   return MessageType;
-}
+};

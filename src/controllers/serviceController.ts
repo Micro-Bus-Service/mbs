@@ -58,10 +58,13 @@ export default class ServiceController {
           uuid: data.uuid,
           version: global.version,
         });
-      }  else {
-        const uuid = await Services.getServiceUUIDByIpAndPort(data.ip, data.port);
+      } else {
+        const uuid = await Services.getServiceUUIDByIpAndPort(
+          data.ip,
+          data.port,
+        );
         errors.push("This instance already registered by this UUID : " + uuid);
-        logger.error({ data, errors});
+        logger.error({ data, errors });
 
         response.status(422);
         response.json(errors);

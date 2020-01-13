@@ -1,57 +1,67 @@
-import { Sequelize } from 'sequelize';
-import logger from './logger';
-import MessageType from '../models/MessageType';
-import Service from '../models/Service';
-import { db } from '@/types/Database'; 
+import { Db } from "@/types/Database";
 
-import path from 'path';
+import logger from "./logger";
 
-const p = path.resolve(process.cwd(), '.env');
-require('dotenv').config({path: p});
+import MessageType from "../models/MessageType";
+import Service from "../models/Service";
 
-const dialect = process.env.DB_ENGINE as "sqlite" | "mysql" | "postgres" | "mariadb" | "mssql" | undefined || 'mysql';
+import path from "path";
+import { Sequelize } from "sequelize";
+
+const p = path.resolve(process.cwd(), ".env");
+
+require("dotenv").config({ path: p });
+
+const dialect =
+  (process.env.DB_ENGINE as
+    | "sqlite"
+    | "mysql"
+    | "postgres"
+    | "mariadb"
+    | "mssql"
+    | undefined) || "mysql";
 const host = process.env.DB_HOST || undefined;
-const port = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : undefined;
-const name = process.env.DB_NAME || 'mbs';
+const port = process.env.DB_PORT
+  ? parseInt(process.env.DB_PORT, 10)
+  : undefined;
+const name = process.env.DB_NAME || "mbs";
 const storage = process.env.DB_PATH || undefined;
-const user = process.env.DB_USER || '';
+const user = process.env.DB_USER || "";
 const password = process.env.DB_PASSWORD;
 
-export const sequelize =  new Sequelize(name, user, password, {
+export const sequelize = new Sequelize(name, user, password, {
   dialect,
   host,
-  port,
-  storage,
   logging: (...msg) => {
     logger.debug(msg);
   },
-  retry: {
-    match: [
-      /SQLITE_BUSY/,
-    ],
-    max: 5
-  },
   pool: {
+    acquire: 20000,
+    idle: 20000,
     max: 5,
     min: 0,
-    idle: 20000,
-    acquire: 20000
-  }
+  },
+  port,
+  retry: {
+    match: [/SQLITE_BUSY/],
+    max: 5,
+  },
+  storage,
 });
 
-const db: db = {
-  sequelize,
+const db: Db = {
   messageType: MessageType(sequelize),
+  sequelize,
   service: Service(sequelize),
 };
 
 db.service.belongsToMany(db.messageType, {
-  through: 'messagetypeservice',
-  foreignKey: 'serviceId'
+  foreignKey: "serviceId",
+  through: "messagetypeservice",
 });
 db.messageType.belongsToMany(db.service, {
-  through: 'messagetypeservice',
-  foreignKey: 'messageTypeId'
+  foreignKey: "messageTypeId",
+  through: "messagetypeservice",
 });
 
 export default db;

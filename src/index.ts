@@ -1,7 +1,7 @@
 import "module-alias/register";
 // tslint:disable-next-line: ordered-imports
 import Server from "@/utils/server";
-import db from './utils/db';
+import db from "./utils/db";
 
 const port = 9000;
 

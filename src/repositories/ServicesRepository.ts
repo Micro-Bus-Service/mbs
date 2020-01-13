@@ -1,9 +1,9 @@
 import { RequestRegister } from "@/types/Request";
 import { ServicesByNameInterface } from "@/types/Service";
 
-import db from '../utils/db';
 import { MessageType } from "../models/MessageType";
 import { Service } from "../models/Service";
+import db from "../utils/db";
 
 export class Services {
   /**
@@ -12,14 +12,17 @@ export class Services {
    * @param {string} ip The ip
    * @param {number} port The port
    */
-  public async getServiceUUIDByIpAndPort(ip: string, port: number): Promise<string|undefined> {
+  public async getServiceUUIDByIpAndPort(
+    ip: string,
+    port: number,
+  ): Promise<string | undefined> {
     const service = await db.service.findOne({
       where: {
         ip,
-        port
-      }
+        port,
+      },
     });
-    
+
     return service ? service.uuid : undefined;
   }
 
@@ -29,7 +32,7 @@ export class Services {
    * @param {string} uuid The uuid to search
    */
   public async haveUUID(uuid: string): Promise<boolean> {
-    const service = await db.service.findOne({where:{uuid}});
+    const service = await db.service.findOne({ where: { uuid } });
 
     return service !== null;
   }
@@ -39,9 +42,9 @@ export class Services {
    * @param {string} messageType The message's type
    */
   public async isListened(messageType: string): Promise<boolean> {
-    const mt = await db.messageType.findOne({where:{name: messageType}});
+    const mt = await db.messageType.findOne({ where: { name: messageType } });
     const services = await mt?.getServices();
-    
+
     return services !== undefined && services.length > 0;
   }
 
@@ -56,12 +59,12 @@ export class Services {
 
     const service = await db.service.findOne({
       where: {
-        name: data.serviceName,
-        version: data.version,
         ip: data.ip,
+        name: data.serviceName,
         port: data.port,
-        url: data.url
-      }
+        url: data.url,
+        version: data.version,
+      },
     });
 
     if (service !== null) {
@@ -71,28 +74,29 @@ export class Services {
     for (const messageType of data.messageType) {
       const mt = await db.messageType.findOrCreate({
         where: {
-          name: messageType
-        }
-      })
-      
+          name: messageType,
+        },
+      });
+
       messagesTypes.push(mt[0]);
     }
-    
-    await db.service.create({
-      name: data.serviceName,
-      version: data.version,
-      ip: data.ip,
-      port: data.port,
-      url: data.url,
-      uuid: data.uuid
-    })
-    .then(async (service) => {
-      for (const messageType of messagesTypes) {
-        if (service instanceof Service) {
-          await service.addMessageType(messageType);
+
+    await db.service
+      .create({
+        ip: data.ip,
+        name: data.serviceName,
+        port: data.port,
+        url: data.url,
+        uuid: data.uuid,
+        version: data.version,
+      })
+      .then(async (service) => {
+        for (const messageType of messagesTypes) {
+          if (service instanceof Service) {
+            await service.addMessageType(messageType);
+          }
         }
-      }
-    });
+      });
 
     return true;
   }
@@ -103,9 +107,11 @@ export class Services {
    * @param {string} messageType The message type
    * @return ServicesInterface
    */
-  public async getByMessageType(messageType: string): Promise<ServicesByNameInterface> {
+  public async getByMessageType(
+    messageType: string,
+  ): Promise<ServicesByNameInterface> {
     const returned: ServicesByNameInterface = {};
-    const mt = await db.messageType.findOne({where: {name: messageType}});
+    const mt = await db.messageType.findOne({ where: { name: messageType } });
     const services = await mt?.getServices();
 
     if (services) {
@@ -128,8 +134,8 @@ export class Services {
    */
   public async delete(uuid: string): Promise<boolean> {
     const nbLineDelete = await db.service.destroy({
-      where: {uuid}
-    })
+      where: { uuid },
+    });
 
     return nbLineDelete === 1;
   }

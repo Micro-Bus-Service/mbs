@@ -1,5 +1,5 @@
 import Service from "@/models/Service";
-import Services from "@/repository/ServicesRepository";
+import Services from "@/repositories/ServicesRepository";
 import { RequestMessage } from "@/types/Request";
 import { ServicesInterface } from "@/types/Service";
 import logger from "@/utils/logger";

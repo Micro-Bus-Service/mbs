@@ -7,7 +7,7 @@ import path from 'path';
 const p = path.resolve(process.cwd(), '.env.test');
 require('dotenv').config({path: p});
 
-import { Services } from "../../src/repository/ServicesRepository";
+import { Services } from "../../src/repositories/ServicesRepository";
 import db from "../../src/utils/db";
 
 const data: RequestRegister = {

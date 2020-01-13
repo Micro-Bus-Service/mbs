@@ -1,4 +1,4 @@
-import Services from "@/store/Services";
+import Services from "@/repositories/ServicesRepository";
 import { RequestRegister } from "@/types/Request";
 import logger from "@/utils/logger";
 import { Request, Response } from "express";
@@ -11,7 +11,7 @@ export default class ServiceController {
    * @param {Request} request The request
    * @param {Response} response The Response
    */
-  public register(request: Request, response: Response) {
+  public async register(request: Request, response: Response) {
     const data = request.body as RequestRegister;
     const errors: string[] = [];
 
@@ -49,35 +49,22 @@ export default class ServiceController {
       response.json(errors);
     } else {
       data.uuid = uuidv4();
-      if (Services.add(data)) {
+      if (await Services.add(data)) {
         logger.info("Add service : " + data.uuid);
         response.status(201);
         response.json({
+          messageType: "service.added",
           serviceName: global.serviceName,
           uuid: data.uuid,
           version: global.version,
         });
-      } else {
-        data.uuid = uuidv4();
-        if (Services.add(data)) {
-          logger.info("Add service : " + data.uuid);
-          response.status(201);
-          response.json({
-            messageType: "service.added",
-            serviceName: global.serviceName,
-            uuid: data.uuid,
-            version: global.version,
-          });
-        } else {
-          const uuid = Services.getServiceUUIDByIpAndPort(data.ip, data.port);
-          errors.push(
-            "This instance already registered by this UUID : " + uuid,
-          );
-          logger.error({ data, errors });
+      }  else {
+        const uuid = await Services.getServiceUUIDByIpAndPort(data.ip, data.port);
+        errors.push("This instance already registered by this UUID : " + uuid);
+        logger.error({ data, errors});
 
-          response.status(422);
-          response.json(errors);
-        }
+        response.status(422);
+        response.json(errors);
       }
     }
   }
@@ -88,11 +75,11 @@ export default class ServiceController {
    * @param request The request
    * @param response The response
    */
-  public unregister(request: Request, response: Response) {
+  public async unregister(request: Request, response: Response) {
     const uuid = request.params.uuid as string;
     const errors: string[] = [];
 
-    const isDeleted = Services.delete(uuid);
+    const isDeleted = await Services.delete(uuid);
     if (isDeleted) {
       response.status(201);
       response.json({

@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model, HasManyCreateAssociationMixin, HasManyCountAssociationsMixin, HasManyHasAssociationMixin, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Association } from "sequelize";
+import { Sequelize, DataTypes, Model, HasManyCreateAssociationMixin, HasManyCountAssociationsMixin, HasManyHasAssociationMixin, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Association, HasManySetAssociationsMixin } from "sequelize";
 import { MessageType } from "./MessageType";
 
 export class Service extends Model {

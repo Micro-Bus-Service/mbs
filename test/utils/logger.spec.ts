@@ -1,5 +1,4 @@
 import { expect } from "chai";
-import winston from "winston";
 import logger from "../../src/utils/logger";
 
 describe("logger.ts", () => {

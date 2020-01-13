@@ -68,18 +68,16 @@ export class Services {
       return false;
     }
 
-    data.messageType.map(async (messageType) => {
+    for (const messageType of data.messageType) {
       const mt = await db.messageType.findOrCreate({
         where: {
           name: messageType
         }
       })
-
-      if (mt instanceof MessageType) {
-        messagesTypes.push(mt);
-      }
-    })
-
+      
+      messagesTypes.push(mt[0]);
+    }
+    
     await db.service.create({
       name: data.serviceName,
       version: data.version,
@@ -88,12 +86,12 @@ export class Services {
       url: data.url,
       uuid: data.uuid
     })
-    .then((service) => {
-      messagesTypes.map((messageType) => {
+    .then(async (service) => {
+      for (const messageType of messagesTypes) {
         if (service instanceof Service) {
-          messageType.addService(service);
+          await service.addMessageType(messageType);
         }
-      })
+      }
     });
 
     return true;
@@ -111,11 +109,14 @@ export class Services {
     const services = await mt?.getServices();
 
     if (services) {
-      services.map((service) => {
+      for (const service of services) {
         if (service.name !== undefined && service.uuid !== undefined) {
+          if (returned[service.name] === undefined) {
+            returned[service.name] = {};
+          }
           returned[service.name][service.uuid] = service;
         }
-      })
+      }
     }
 
     return returned;

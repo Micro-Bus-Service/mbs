@@ -1,15 +1,16 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended",
-        "tslint-no-unused-expression-chai"
-    ],
-    "jsRules": {},
-    "rules": {
-        "no-unused-expression": [true, "allow-new"],
-        "no-console": false,
-        "no-namespace": [true, "allow-declarations"],
-        "interface-name": [true, "never-prefix"]
-    },
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-no-unused-expression-chai",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-unused-expression": [true, "allow-new"],
+    "no-console": false,
+    "no-namespace": [true, "allow-declarations"],
+    "interface-name": [true, "never-prefix"]
+  },
+  "rulesDirectory": []
 }

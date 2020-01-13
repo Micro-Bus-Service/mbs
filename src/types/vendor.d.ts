@@ -1,4 +1,4 @@
-declare namespace NodeJS  {
+declare namespace NodeJS {
   interface Global {
     serviceName: string;
     version: string;

@@ -43,7 +43,7 @@ export default class ServiceController {
     }
 
     if (errors.length > 0) {
-      logger.error({ data, errors});
+      logger.error({ data, errors });
 
       response.status(422);
       response.json(errors);

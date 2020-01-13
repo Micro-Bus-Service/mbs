@@ -2,9 +2,10 @@ import {RequestRegister} from "../../src/types/Request";
 
 import { expect } from "chai";
 import uuidv4 from "uuid/v4";
+import path from 'path';
 
-require('dotenv').config();
-require('../../src/utils/db');
+const p = path.resolve(process.cwd(), '.env.test');
+require('dotenv').config({path: p});
 
 import { Services } from "../../src/repository/ServicesRepository";
 import db from "../../src/utils/db";
@@ -21,6 +22,8 @@ const data: RequestRegister = {
   uuid: uuidv4(),
   version: "0.1",
 };
+
+console.log(process.env.DB_ENGINE)
 
 const sv = new Services();
 

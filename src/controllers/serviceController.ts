@@ -67,7 +67,7 @@ export default class ServiceController {
         logger.error({ data, errors });
 
         response.status(422);
-        response.json(errors);
+        response.json({errors: errors, uuid: uuid});
       }
     }
   }

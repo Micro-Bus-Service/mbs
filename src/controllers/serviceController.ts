@@ -3,6 +3,7 @@ import { RequestRegister } from "@/types/Request";
 import logger from "@/utils/logger";
 import { Request, Response } from "express";
 import uuidv4 from "uuid/v4";
+import { ResponseBus } from "@/types/Response";
 
 export default class ServiceController {
   /**
@@ -14,6 +15,11 @@ export default class ServiceController {
   public async register(request: Request, response: Response) {
     const data = request.body as RequestRegister;
     const errors: string[] = [];
+    const body: ResponseBus = {
+      messageType: "service.added",
+      serviceName: global.serviceName,
+      version: global.version,
+    };
 
     if (data !== undefined) {
       if (data.serviceName === undefined) {
@@ -44,20 +50,17 @@ export default class ServiceController {
 
     if (errors.length > 0) {
       logger.error({ data, errors });
+      body.errors = errors;
 
       response.status(422);
-      response.json(errors);
+      response.json(body);
     } else {
       data.uuid = uuidv4();
+      body.uuid = data.uuid;
       if (await Services.add(data)) {
         logger.info("Add service : " + data.uuid);
         response.status(201);
-        response.json({
-          messageType: "service.added",
-          serviceName: global.serviceName,
-          uuid: data.uuid,
-          version: global.version,
-        });
+        response.json(body);
       } else {
         const uuid = await Services.getServiceUUIDByIpAndPort(
           data.ip,
@@ -65,9 +68,10 @@ export default class ServiceController {
         );
         errors.push("This instance already registered by this UUID : " + uuid);
         logger.error({ data, errors });
+        body.errors = errors;
 
         response.status(422);
-        response.json({errors: errors, uuid: uuid});
+        response.json(body);
       }
     }
   }
@@ -81,20 +85,22 @@ export default class ServiceController {
   public async unregister(request: Request, response: Response) {
     const uuid = request.params.uuid as string;
     const errors: string[] = [];
+    const body: ResponseBus = {
+      messageType: "service.deleted",
+      serviceName: global.serviceName,
+      uuid,
+      version: global.version,
+    };
 
     const isDeleted = await Services.delete(uuid);
     if (isDeleted) {
       response.status(201);
-      response.json({
-        messageType: "service.deleted",
-        serviceName: global.serviceName,
-        uuid,
-        version: global.version,
-      });
+      response.json(body);
     } else {
       errors.push("Problem when deleting service, maybe he is already deleted");
+      body.errors = errors;
       response.status(422);
-      response.json(errors);
+      response.json(body);
     }
   }
 }

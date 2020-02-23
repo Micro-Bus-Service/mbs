@@ -4,7 +4,12 @@ Installation
 clone repository
 ---
 
-`git clone https://github.com/Vilsafur/mbs.git`
+`git clone https://github.com/Micro-Bus-Service/mbs.git`
+
+install dependencies
+---
+
+`npm i`
 
 Build project
 ---

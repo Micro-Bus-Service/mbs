@@ -57,7 +57,8 @@ Body
     {
       "serviceName": string,
       "version": string,
-      "uuid": string
+      "uuid": string,
+      "errors"?: string[]
     }
 
 +-------------+-----------------------------------------------------+
@@ -68,4 +69,6 @@ Body
 |   version   | The version of the microservice bus                 |
 +-------------+-----------------------------------------------------+
 |     uuid    | The Universal Unique Identifier used by the service |
++-------------+-----------------------------------------------------+
+|    errors   | The list of errors found                            |
 +-------------+-----------------------------------------------------+

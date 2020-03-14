@@ -1,9 +1,9 @@
 import Services from "@/repositories/ServicesRepository";
 import { RequestRegister } from "@/types/Request";
+import { ResponseBus } from "@/types/Response";
 import logger from "@/utils/logger";
 import { Request, Response } from "express";
 import uuidv4 from "uuid/v4";
-import { ResponseBus } from "@/types/Response";
 
 export default class ServiceController {
   /**

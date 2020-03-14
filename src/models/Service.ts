@@ -1,3 +1,4 @@
+import logger from "@/utils/logger";
 import {
   Association,
   DataTypes,
@@ -51,15 +52,19 @@ export class Service extends Model {
    *
    * @param message The message to send
    */
-  public sendMessage(message: string | object) {
+  public async sendMessage(message: string | object) {
     const url = "http://" + this.ip + ":" + this.port + "/" + this.url;
-    return fetch(url, {
+    const response = await fetch(url, {
       body: JSON.stringify(message),
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-    }).then((response) => response.json());
+    })
+      .then((response) => response.json())
+      .catch((error) => logger.error(error));
+
+    return response;
   }
 }
 

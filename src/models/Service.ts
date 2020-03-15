@@ -1,4 +1,3 @@
-import logger from "@/utils/logger";
 import {
   Association,
   DataTypes,
@@ -10,6 +9,7 @@ import {
   Model,
   Sequelize,
 } from "sequelize";
+import logger from "../utils/logger";
 import { MessageType } from "./MessageType";
 
 export class Service extends Model {

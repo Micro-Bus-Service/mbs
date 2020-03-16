@@ -3,7 +3,7 @@ import "module-alias/register";
 import Server from "@/utils/server";
 import db from "./utils/db";
 
-const port = 9000;
+const port = parseInt(process.env.PORT || "9000", 10);
 
 db.sequelize.sync();
 

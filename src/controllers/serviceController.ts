@@ -43,6 +43,16 @@ export default class ServiceController {
       }
       if (data.messageType === undefined) {
         errors.push("No message type defined");
+      } else {
+        if (!(data.messageType instanceof Array)) {
+          errors.push("messageType is not an array");
+        } else {
+          data.messageType.forEach((mt) => {
+            if (!(mt instanceof String)) {
+              errors.push("messageType is not an array of string");
+            }
+          });
+        }
       }
     } else {
       errors.push("Problem with request : no body");
